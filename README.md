@@ -34,6 +34,23 @@ Les documents se désignent soit par un chemin sous un dossier autorisé
 | `POST /aplatir-premiere-page` | — | PDF dont la page 1 est remplacée par son image |
 | `POST /caviarder` | `regles` : `[{texte, ignorer_casse, pleine_largeur, marge, remplacement}]` | PDF caviardé (en-tête `X-Caviardages`) |
 
+## Ghostscript (`ghostscript/`)
+
+Second service, construit séparément : exécute Ghostscript (`pdfwrite`) sur un ou
+plusieurs PDF et renvoie le PDF produit. Image Ubuntu 22.04 (Ghostscript 9.55).
+
+```bash
+docker build -t pdf-gs ghostscript
+docker run -p 8001:8000 -v /chemin/vers/pdfs:/data:ro pdf-gs
+```
+
+`POST /gs` : `{"entrees": ["/data/a.pdf"], "args": ["-sDEVICE=pdfwrite",
+"-dPDFSETTINGS=/ebook", "-dNOPAUSE", "-dQUIET", "-dBATCH", "-sOutputFile=@SORTIE",
+"@ENTREE"], "delai": 600}` — ou multipart (fichiers `entree` + champ `params`).
+La ligne de commande est exécutée dans l'ordre donné (Ghostscript la recopie dans
+le PDF). Sorties, autres périphériques et options désactivant le mode sûr sont
+refusés. Réponse : le PDF (200), `{returncode, stdout, stderr}` (422) ou 504.
+
 ## Versions
 
 Les versions sont épinglées dans `requirements.txt` (PyMuPDF, pymupdf4llm et
@@ -50,5 +67,5 @@ la Free Software Foundation, version 3 de la licence ou (à votre choix) toute
 version ultérieure. Il est distribué SANS AUCUNE GARANTIE. Voir le fichier
 [LICENSE](LICENSE).
 
-PyMuPDF, pymupdf4llm et pymupdf-layout sont distribués par Artifex Software
-sous GNU AGPL v3 ; ils sont utilisés ici sans modification.
+PyMuPDF, pymupdf4llm, pymupdf-layout et Ghostscript sont distribués par Artifex
+Software sous GNU AGPL v3 ; ils sont utilisés ici sans modification.
