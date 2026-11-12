@@ -29,6 +29,7 @@ Les documents se désignent soit par un chemin sous un dossier autorisé
 | `POST /rendu` | `page`, `zoom`, `format` (`png`, `jpeg`), `jpg_quality`, `colorspace` | image de la page |
 | `POST /extraire` | `pages` | PDF composé des pages demandées |
 | `POST /dessins` | `page` ou `pages` | nombre de dessins vectoriels |
+| `POST /lignes-pivotees` | `page` ou `pages`, `seuil` (0.9) | texte des lignes non horizontales (texte vertical ou incliné) |
 | `POST /texte-lecture` | `page` ou `pages` | texte dans l'ordre de lecture, tableaux en Markdown |
 | `POST /markdown` | `pages` (facultatif), `use_ocr` | `pymupdf4llm.to_markdown(page_chunks=True)` : texte et métadonnées par page |
 | `POST /aplatir-premiere-page` | — | PDF dont la page 1 est remplacée par son image |
@@ -67,6 +68,11 @@ Composants tiers, utilisés sans modification, et leur code source :
 | pymupdf4llm | 1.28.2 | AGPL v3 (Artifex) | https://github.com/pymupdf/pymupdf4llm |
 | pymupdf-layout | 1.28.2 | AGPL v3 (Artifex) | https://pypi.org/project/pymupdf-layout/ |
 | Ghostscript | 9.55.0 (paquet Ubuntu 22.04) | AGPL v3 (Artifex) | https://ghostscript.com/releases/ — https://launchpad.net/ubuntu/+source/ghostscript |
+
+## Conformité
+
+Voir [COMPLIANCE.md](COMPLIANCE.md) : composants, versions, licences, sources et
+historique des déploiements.
 
 ## Licence
 

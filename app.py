@@ -152,6 +152,22 @@ def dessins():
         return jsonify({"nombres": [len(doc[p].get_drawings()) for p in _pages(params, doc)]})
 
 
+@app.post("/lignes-pivotees")
+def lignes_pivotees():
+    """Texte des lignes non horizontales de chaque page demandee (texte vertical
+    ou incline), dans l'ordre du document. `seuil` : une ligne est retenue quand
+    la composante horizontale de sa direction est inferieure a ce seuil (0.9)."""
+    params = _params()
+    seuil = float(params.get("seuil", 0.9))
+    with _ouvrir(params) as doc:
+        res = []
+        for p in _pages(params, doc):
+            res.append(["".join(s["text"] for s in l["spans"])
+                        for b in doc[p].get_text("dict")["blocks"]
+                        for l in b.get("lines", []) if abs(l["dir"][0]) < seuil])
+        return jsonify({"lignes": res})
+
+
 @app.post("/texte-lecture")
 def texte_lecture():
     """Texte d'une page dans l'ordre de lecture, tableaux en markdown."""
