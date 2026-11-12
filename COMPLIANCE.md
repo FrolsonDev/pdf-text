@@ -18,9 +18,14 @@ leurs paquets officiels, et leurs versions sont figées.
 | Ghostscript | 9.55.0~dfsg1-0ubuntu5.15 | pdf-gs | paquet Ubuntu 22.04 (`apt`) | GNU AGPL v3 | https://ghostscript.com/releases/ — https://launchpad.net/ubuntu/+source/ghostscript |
 
 ¹ Les métadonnées de pymupdf-layout 1.28.2 portent aussi le classificateur
-`License :: Other/Proprietary License`. Ce classificateur désigne l'option de
-licence commerciale. Le champ `License` du même paquet indique la double
-licence AGPL v3 / licence commerciale Artifex.
+`License :: Other/Proprietary License`. C'est un reste de l'ancienne licence.
+Jusqu'à la 1.28.2, pymupdf-layout était distribué sous double licence PolyForm
+Noncommercial / commerciale Artifex, en binaire seulement. Le 10 août 2026,
+Artifex a annoncé qu'à partir de la 1.28.2 il est sous GNU AGPL v3, comme MuPDF,
+PyMuPDF et pymupdf4llm, avec un code source public :
+https://pymupdf.io/blog/open-source-all-the-way-down-pymupdf4llm-goes-fully-agpl —
+source : https://github.com/ArtifexSoftware/pymupdf_layout. Seule la version
+1.28.2 a été utilisée en production.
 
 ## Autres composants inclus dans les images
 
@@ -47,6 +52,26 @@ Les services exposent des opérations élémentaires sur un PDF par HTTP (voir l
 `README.md`). Ils ne contiennent aucune logique métier. L'application qui les
 appelle est un programme séparé : elle échange uniquement des requêtes HTTP et
 reçoit du texte, du JSON, des images ou des PDF.
+
+## Lecture de l'article 13 retenue
+
+L'offre de code source de l'article 13 porte sur l'œuvre couverte avec laquelle
+les utilisateurs interagissent à distance. Ici, ce sont ces services et les
+composants Artifex qu'ils exécutent. Elle ne porte pas sur les programmes séparés
+qui les appellent par HTTP avec des formats ordinaires : texte, Markdown, JSON,
+images, PDF. Aucune structure de données interne de PyMuPDF n'est transmise à
+l'appelant. Depuis la v1.1.0, la dernière route qui en renvoyait une
+(`get_text("dict")`) a été remplacée par `/lignes-pivotees`, qui ne renvoie que
+du texte.
+
+## Avant ces services
+
+Avant la mise en production de la v1.0.0 (12/11/2026), PyMuPDF et pymupdf4llm
+étaient importés directement dans l'application de traitement. Les traitements
+qui les utilisaient étaient accessibles aux visiteurs du site depuis début
+novembre 2026 seulement, soit environ une semaine. Ghostscript était lancé comme
+programme séparé (sous-processus). Le code de ces services et les mentions sur
+le site ont été publiés le 12/11/2026.
 
 ## Reconstruire les services
 
