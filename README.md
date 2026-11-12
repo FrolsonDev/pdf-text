@@ -57,6 +57,17 @@ Les versions sont épinglées dans `requirements.txt` (PyMuPDF, pymupdf4llm et
 pymupdf-layout 1.28.2) pour obtenir des sorties identiques d'un déploiement à
 l'autre.
 
+## Sources des composants utilisés
+
+Composants tiers, utilisés sans modification, et leur code source :
+
+| Composant | Version | Licence | Source |
+|---|---|---|---|
+| PyMuPDF | 1.28.2 | AGPL v3 (Artifex) | https://github.com/pymupdf/PyMuPDF |
+| pymupdf4llm | 1.28.2 | AGPL v3 (Artifex) | https://github.com/pymupdf/pymupdf4llm |
+| pymupdf-layout | 1.28.2 | AGPL v3 (Artifex) | https://pypi.org/project/pymupdf-layout/ |
+| Ghostscript | 9.55.0 (paquet Ubuntu 22.04) | AGPL v3 (Artifex) | https://ghostscript.com/releases/ — https://launchpad.net/ubuntu/+source/ghostscript |
+
 ## Licence
 
 Copyright (C) 2026 FrolsonDev
